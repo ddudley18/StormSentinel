@@ -18,7 +18,7 @@ const WildfireMarker: React.FC<WildfireProps> = ({ id, google, stats, mouseEnter
 
   // Add a check for stats to avoid the "Cannot read properties of undefined" error
   if (!stats) {
-    return null; // or you can return some default content or loading indicator
+    return null;
   }
 
 
