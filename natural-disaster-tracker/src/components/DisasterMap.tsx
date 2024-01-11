@@ -33,67 +33,26 @@ interface DisasterMapProps {
   zoom: number;
 }
 
-interface DataObject {
-  lat: number;
-  long: number;
-  uid: number;
-  aqi: number;
-}
-
-const generateRandomData = (): DataObject[] => {
-  const getRandomNumber = (min: number, max: number): number => {
-    return Math.random() * (max - min) + min;
-  };
-
-  const dataArray: DataObject[] = [];
-
-  for (let i = 0; i < 1000; i++) {
-    const randomLat = getRandomNumber(-90, 90).toFixed(6);
-    const randomLong = getRandomNumber(-180, 180).toFixed(6);
-    const randomUid = Math.floor(getRandomNumber(1, 100000));
-    const randomAqi = Math.floor(getRandomNumber(1, 10));
-
-    const dataObject: DataObject = {
-      lat: parseFloat(randomLat),
-      long: parseFloat(randomLong),
-      uid: randomUid,
-      aqi: randomAqi,
-    };
-
-    dataArray.push(dataObject);
-  }
-
-  return dataArray;
-};
-
 const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zoom }) => {
-  console.log(eventData)
+  const [locationInfo, setLocationInfo] = useState<{id: string, title: string} | null>()
+  
   const events = eventData.map((event) => {
     let coordinates = event['geometries'][0]['coordinates']
-    return {
+    const markerData = {
       'lat': coordinates[1],
       'lng': coordinates[0],
       'id': event['id'],
       'title': event['title']}
+    
+    return <WildfireMarker
+            key={markerData.id}
+            google={google}
+            data={markerData}
+            clickHandler={() => setLocationInfo({ id: event.id, title: event.title })}
+            id='asfasd'
+            mouseEnterHandler={() => {return null}}
+            mouseLeaveHandler={() => {return null}} />
   });
-  const [stats, setStats] = useState<DataObject[]>([]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchData = (): void => {
-      const randomDataArray = generateRandomData();
-      if (isMounted) {
-        setStats(randomDataArray);
-      }
-    };
-
-    fetchData();
-
-    return (): void => {
-      isMounted = false;
-    };
-  }, []);
 
   const mapObject = {
     google: google,
@@ -104,8 +63,9 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
   return (
     <div className="w-screen h-screen relative">
       <Map {...mapObject}>
-        <WildfireMarker google={google} stats={events} id='asfasd' mouseEnterHandler={() => {return null}} mouseLeaveHandler={() => {return null}}  />
+        {events}
       </Map>
+      {locationInfo && <LocationInfoBox info={locationInfo} />}
     </div>
   );
 };
