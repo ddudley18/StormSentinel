@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import GoogleMapReact from 'google-map-react';
-import LocationMarker from './LocationMarker';
+import WildfireMarker from './WildfireMarker';
+import SevereStormMarker from './SevereStormMarker';
+import VolcanoMarker from './VolcanoMarker';
+import IcebergMarker from './IcebergMarker';
 import LocationInfoBox from './LocationInfoBox';
 
 interface EventData {
@@ -29,19 +32,40 @@ const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string;
 
 const Map: React.FC<MapProps> = ({ eventData, center, zoom }) => {
   const [locationInfo, setLocationInfo] = useState<null | { id: string; title: string }>(null);
+  const mapRef = useRef<google.maps.Map<Element> | null>(null);
 
-  const markers = eventData.map(ev => {
-    if(ev.categories[0].id == 8) {
-      return (
-        <LocationMarker 
-          lat={ev.geometries[0].coordinates[1]} 
-          lng={ev.geometries[0].coordinates[0]}
-          onClick={() => setLocationInfo({ id: ev.id, title: ev.title})}
-        />
-      )
+  const markers = useMemo(() => {
+    return eventData.map(ev => {
+      const SevereWeatherComponent = getComponentByCategoryId(ev.categories[0].id);
+      if (SevereWeatherComponent) {
+        return (
+          <SevereWeatherComponent
+            key={ev.id}
+            lat={ev.geometries[0].coordinates[1]}
+            lng={ev.geometries[0].coordinates[0]}
+            onClick={() => setLocationInfo({ id: ev.id, title: ev.title })}
+          />
+        );
+      }
+      return null;
+    });
+  }, [eventData]);
+  
+  
+  function getComponentByCategoryId(categoryId: number) {
+    switch (categoryId) {
+      case 8:
+        return WildfireMarker;
+      case 10:
+        return SevereStormMarker;
+      case 12:
+        return VolcanoMarker;
+      case 15:
+        return IcebergMarker;
+      default:
+        return null;
     }
-    return null
-  })
+  }
 
   return (
     <div id="mapBox" className="h-screen w-screen">
@@ -50,6 +74,11 @@ const Map: React.FC<MapProps> = ({ eventData, center, zoom }) => {
           key: googleMapsApiKey }}
         defaultCenter={ center }
         defaultZoom={ zoom }
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map }) => {
+          // Once the map is loaded, store its reference in the ref
+          mapRef.current = map;
+        }}
       >
         {markers}
       </GoogleMapReact>
