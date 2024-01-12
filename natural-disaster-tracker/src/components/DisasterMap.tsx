@@ -1,11 +1,13 @@
-import { useState, useEffect, useRef, useMemo, Component } from 'react';
+import { useState, useEffect, useRef, useMemo, Component, MutableRefObject } from 'react';
 import WildfireMarker from './WildfireMarker';
 import SevereStormMarker from './SevereStormMarker';
 import VolcanoMarker from './VolcanoMarker';
 import IcebergMarker from './IcebergMarker';
 import LocationInfoBox from './LocationInfoBox';
-import { Map, GoogleApiWrapper } from "google-maps-react";
+import { Map, GoogleApiWrapper, mapEventHandler } from "google-maps-react";
 import { stringify } from 'querystring';
+import { useSelector, useDispatch } from 'react-redux';
+import { setActiveMarker, setShowingInfoWindow } from "@/actions";
 
 
 const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string;
@@ -34,30 +36,47 @@ interface DisasterMapProps {
 }
 
 const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zoom }) => {
-  const [locationInfo, setLocationInfo] = useState<{id: string, title: string} | null>()
+  const [map, setMap] = useState<google.maps.Map | google.maps.StreetViewPanorama | undefined>();
   
-  const events = eventData.map((event) => {
-    let coordinates = event['geometries'][0]['coordinates']
-    const markerData = {
-      'lat': coordinates[1],
-      'lng': coordinates[0],
-      'id': event['id'],
-      'title': event['title']}
-    
-    return <WildfireMarker
-            key={markerData.id}
-            google={google}
-            data={markerData}
-            clickHandler={() => setLocationInfo({ id: event.id, title: event.title })}
-            id='asfasd'
-            mouseEnterHandler={() => {return null}}
-            mouseLeaveHandler={() => {return null}} />
-  });
+  const events = useMemo(() => {
+    return eventData.map((event) => {
+      let coordinates = event['geometries'][0]['coordinates']
+      const markerData = {
+        'lat': coordinates[1],
+        'lng': coordinates[0],
+        'id': event['id'],
+        'title': event['title']}
+      
+      return <WildfireMarker 
+              key={event.id}
+              google={google}
+              mapRef={map}
+              markerData={markerData}
+              // onClick={() => setLocationInfo({ id: event.id, title: event.title })}
+              mouseEnterHandler={() => {return null}}
+              mouseLeaveHandler={() => {return null}} 
+              
+              />
+    });
+  }, [eventData]);
+
+  const dispatch = useDispatch();
+  const onMapClicked = () => {
+    dispatch(setShowingInfoWindow(false));
+  };
+
+  const onMapReady: mapEventHandler = (mapProps: any, map: google.maps.Map<Element> | undefined) => {
+    setMap(map);
+    // setMap(map) = map;
+  };
 
   const mapObject = {
     google: google,
     initialCenter: center,
-    zoom: zoom
+    zoom: zoom,
+    onClick: onMapClicked,
+    onReady: onMapReady,
+    fullscreenControl: false
   }
 
   return (
@@ -65,7 +84,7 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
       <Map {...mapObject}>
         {events}
       </Map>
-      {locationInfo && <LocationInfoBox info={locationInfo} />}
+      {<LocationInfoBox info={{id:'asdfa', title:'1232'}}/>}
     </div>
   );
 };
