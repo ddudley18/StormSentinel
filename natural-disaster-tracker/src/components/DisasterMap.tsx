@@ -19,7 +19,11 @@ interface EventData {
     date: string;
     type: string;
     coordinates: [number, number]
-  }[]
+  }[];
+  sources: {
+    id: string;
+    url: string;
+  }[];
 }
 
 interface DisasterMapProps {
@@ -38,18 +42,21 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
   const events = useMemo(() => {
     return eventData.map((event) => {
       let coordinates = event['geometries'][0]['coordinates']
+
+      const category = event['categories'][0]['id'];
+      const source = event['sources'][0]['url'];
+
       const markerData = {
         'lat': coordinates[1],
         'lng': coordinates[0],
         'id': event['id'],
-        'title': event['title']}
-
-      const category = event['categories'][0]['id'];
+        'title': event['title'],
+        'category': category,
+        'source': source}
       
       return (
               <DisasterMarker 
               key={event.id}
-              category={category}
               google={google}
               mapRef={map}
               markerData={markerData}

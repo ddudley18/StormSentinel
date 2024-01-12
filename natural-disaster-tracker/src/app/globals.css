@@ -26,3 +26,11 @@ body {
     rgb(var(--background-start-rgb));
   overflow: hidden;
 }
+
+
+@layer base {
+  :root {
+    font-family: 'Blinker', sans-serif;
+    font-size: 1.1rem;
+  }
+}

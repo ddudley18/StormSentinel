@@ -1,5 +1,5 @@
 interface AppState {
-  activeMarker: { id: string, title: string } | null;
+  activeMarker: { id: string, title: string, disasterType: string, source: string} | null;
   showingInfoWindow: boolean;
 }
 
