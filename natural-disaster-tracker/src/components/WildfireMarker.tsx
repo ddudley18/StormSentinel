@@ -1,24 +1,29 @@
 import { Icon } from "@iconify/react"
-import { PureComponent, useState } from "react";
+import { PureComponent, useState, useRef, useMemo } from "react";
 import { Marker } from "google-maps-react"
-import LocationInfoBox from "./LocationInfoBox";
+import { useSelector, useDispatch } from 'react-redux';
+import { setActiveMarker, setShowingInfoWindow } from "@/actions";
 
 interface WildfireProps {
-    id: string;
-    data: { lat: number; lng: number; id: string, title: string};
+    key: React.Key;
+    markerData: { lat: number; lng: number; id: string, title: string};
     mouseEnterHandler: () => void;
     mouseLeaveHandler: () => void;
-    clickHandler: () => void;
     google: any;
+    mapRef: google.maps.Map | google.maps.StreetViewPanorama | undefined;
 }
 
-const WildfireMarker: React.FC<WildfireProps> = ({ id, data, clickHandler, mouseEnterHandler, mouseLeaveHandler, google, ...props }) => {
+const WildfireMarker: React.FC<WildfireProps> = ({ key, markerData, mapRef, mouseEnterHandler, mouseLeaveHandler, google, ...props }) => {
   let iw = 70, ih = 94;
+  const dispatch = useDispatch();
 
   const infoObject = {
-    key: id,
-    position: {lat: data.lat, lng: data.lng},
-    onClick: clickHandler,
+    key: key,
+    position: {lat: markerData.lat, lng: markerData.lng},
+    onClick: () => {
+      dispatch(setActiveMarker({id: markerData.id, title: markerData.title})),
+      dispatch(setShowingInfoWindow(true))
+    },
     onMouseover: mouseEnterHandler,
     onMouseout: mouseLeaveHandler,
     google: google,
@@ -31,8 +36,12 @@ const WildfireMarker: React.FC<WildfireProps> = ({ id, data, clickHandler, mouse
     },
   };
 
+  const memoizedMarker = useMemo(() => <Marker {...infoObject} />, [infoObject]);
+
   return (
-    <Marker {...infoObject} />
+    <>
+      {memoizedMarker}
+    </>
   );
 
 }
