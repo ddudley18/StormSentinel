@@ -16,10 +16,7 @@ interface RootState {
 const LocationInfoBox: React.FC<LocationInfoBoxProps> = () => {
   
   const activeMarker = useSelector((state: RootState) => state.activeMarker);
-  console.log(activeMarker)
-
   const showingInfoWindow = useSelector((state: RootState) => state.showingInfoWindow);
-  console.log(showingInfoWindow)
 
   return (
     activeMarker && showingInfoWindow &&
