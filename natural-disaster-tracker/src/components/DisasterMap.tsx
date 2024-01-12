@@ -5,6 +5,7 @@ import { Map, GoogleApiWrapper, mapEventHandler } from "google-maps-react";
 import { stringify } from 'querystring';
 import { useSelector, useDispatch } from 'react-redux';
 import { setActiveMarker, setShowingInfoWindow } from "@/actions";
+import MapKey from './MapKey';
 
 
 const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string;
@@ -93,6 +94,7 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
         {events}
       </Map>
       {<LocationInfoBox info={{id:'None', title:'None'}}/>}
+      <MapKey/>
     </div>
   );
 };
