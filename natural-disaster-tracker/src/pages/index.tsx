@@ -30,7 +30,7 @@ export default function Home() {
     <div>
       <Header />
       <main className="flex min-h-screen flex-col items-center justify-between pt-24">
-        { !loading ? <DisasterMap eventData={eventData} center={{lat: 42.3265, lng: -122.8756}} zoom={6} /> : <Loader/>}
+        { !loading ? <DisasterMap eventData={eventData} center={{lat: 18.22, lng: -66.59}} zoom={4} /> : <Loader/>}
       </main>
     </div>
   )

@@ -1,8 +1,5 @@
 import { useState, useEffect, useRef, useMemo, Component, MutableRefObject } from 'react';
-import WildfireMarker from './WildfireMarker';
-import SevereStormMarker from './SevereStormMarker';
-import VolcanoMarker from './VolcanoMarker';
-import IcebergMarker from './IcebergMarker';
+import DisasterMarker from './DisasterMarker';
 import LocationInfoBox from './LocationInfoBox';
 import { Map, GoogleApiWrapper, mapEventHandler } from "google-maps-react";
 import { stringify } from 'querystring';
@@ -46,9 +43,13 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
         'lng': coordinates[0],
         'id': event['id'],
         'title': event['title']}
+
+      const category = event['categories'][0]['id'];
       
-      return <WildfireMarker 
+      return (
+              <DisasterMarker 
               key={event.id}
+              category={category}
               google={google}
               mapRef={map}
               markerData={markerData}
@@ -57,6 +58,7 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
               mouseLeaveHandler={() => {return null}} 
               
               />
+      )
     });
   }, [eventData]);
 
@@ -67,7 +69,6 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
 
   const onMapReady: mapEventHandler = (mapProps: any, map: google.maps.Map<Element> | undefined) => {
     setMap(map);
-    // setMap(map) = map;
   };
 
   const mapObject = {
@@ -84,7 +85,7 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
       <Map {...mapObject}>
         {events}
       </Map>
-      {<LocationInfoBox info={{id:'asdfa', title:'1232'}}/>}
+      {<LocationInfoBox info={{id:'None', title:'None'}}/>}
     </div>
   );
 };
