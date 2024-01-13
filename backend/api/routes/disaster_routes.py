@@ -6,8 +6,7 @@ from flask_restful import Resource, Api
 app = Flask(__name__)
 api = Api(app)
 
-# This is one resource
-# You can add more resources(more classes!) and each will have it's own methods(GET, POST, PUT, etc)
+
 class Disaster_Data(Resource):
     def get(self):
 
