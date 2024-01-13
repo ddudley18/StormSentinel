@@ -1,16 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Marker } from "google-maps-react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveMarker, setShowingInfoWindow } from "@/actions";
-
-interface DisasterMarkerProps {
-    key: React.Key;
-    markerData: { lat: number; lng: number; id: string, title: string, category: number, source: string};
-    mouseEnterHandler: () => void;
-    mouseLeaveHandler: () => void;
-    google: any;
-    mapRef: google.maps.Map | google.maps.StreetViewPanorama | undefined;
-}
+import { setActiveMarker, setShowingInfoWindow, setInitMarkerClick } from "@/actions";
 
 const idToMarkerMap = new Map<number, string>([
   [8, '/lightorangemarker.png'],
@@ -26,27 +17,31 @@ const idToDisasterTypeMap = new Map<number, string>([
   [15, 'Iceberg'],
 ]);
 
-const DisasterMarker: React.FC<DisasterMarkerProps> = ({ key, markerData, mapRef, google, ...props }) => {
+const SevereStormMarker: React.FC<DisasterMarkerProps> = ({ key, markerData, mapRef, google, ...props }) => {
+  const [passesFilter, setPassesFilter] = useState(true);
   const [isMouseOver, setIsMouseOver] = useState(false);
-  let iw = 70, ih = 94;
   const dispatch = useDispatch();
   let categoryMarker = idToMarkerMap.get(markerData['category']) ?? '/marker.png';
   let disasterType = idToDisasterTypeMap.get(markerData['category']) ?? 'Unknown';
+
+
+  let filter = useSelector((state: RootState) => state.disasterFilters.severeStorms);
+
+  useEffect(() => {
+     setPassesFilter(filter);
+  }, [filter]);
 
   const infoObject = {
     key: key,
     position: {lat: markerData.lat, lng: markerData.lng},
     mapRef: mapRef,
-    className: 'animate-bounce',
     onClick: () => {
-      dispatch(setActiveMarker({id: markerData.id, title: markerData.title, disasterType: disasterType, source: markerData['source']})),
-      dispatch(setShowingInfoWindow(true))
+      dispatch(setActiveMarker({id: markerData.id, title: markerData.title, disasterType: disasterType, source: markerData['source'], coordinates: {lat: markerData.lat, lng: markerData.lng}, zoom: 2})),
+      dispatch(setShowingInfoWindow(true));
+      dispatch(setInitMarkerClick(true));
     },
     onMouseover: () => {
-      // dispatch(setActiveMarker({id: markerData.id, title: markerData.title})),
-      // dispatch(setShowingInfoWindow(true))
       setIsMouseOver(true);
-      categoryMarker= './darkbluemarker.png'
     },
     onMouseout: () => {
       setIsMouseOver(false)
@@ -54,7 +49,7 @@ const DisasterMarker: React.FC<DisasterMarkerProps> = ({ key, markerData, mapRef
     google: google,
     ...props,
     icon: {
-      url: isMouseOver ? './yellowmarker.png' : categoryMarker,
+      url: isMouseOver ? './yellowmarker.png': categoryMarker,
       anchor: new google.maps.Point(18, 36),
       size: new google.maps.Size(44, 44),
       scaledSize: new google.maps.Size(36, 44),
@@ -62,16 +57,12 @@ const DisasterMarker: React.FC<DisasterMarkerProps> = ({ key, markerData, mapRef
   };
 
   const memoizedMarker = useMemo(() => <Marker {...infoObject} />, [infoObject]);
-  console.log(isMouseOver)
 
   return (
     <div>
-      {memoizedMarker}
+      {passesFilter && memoizedMarker}
     </div>
   );
-
 }
 
-export default DisasterMarker;
-
-
+export default SevereStormMarker;
