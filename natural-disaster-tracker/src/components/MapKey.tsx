@@ -1,5 +1,3 @@
-import React from 'react'
-
 const MapKey = () => {
   return (
     <div className="absolute bottom-40 left-16 w-58 min-h-48 p-5 mt-12 bg-black bg-opacity-70 rounded-lg text-l text-white border-2 border-white">
