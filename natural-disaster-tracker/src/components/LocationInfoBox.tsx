@@ -35,7 +35,7 @@ const LocationInfoBox: React.FC<LocationInfoBoxProps> = () => {
 
   return (
     activeMarker && showingInfoWindow &&
-      <div className="absolute top-16 right-16 w-64 min-h-48 p-5 mt-12 bg-black bg-opacity-70 rounded-lg text-lg text-white border-2 border-white">
+      <div className="absolute top-16 right-16 w-64 min-h-48 p-5 mt-12 bg-black bg-opacity-70 rounded-lg text-lg text-white border-2 border-white hover:bg-opacity-90">
           <h2 className="text-3xl">{ activeMarker.id }</h2>
           <ul className="p-0 text-xl">
               <li className="pt-5"><span className='text-gray-400'>TITLE:&nbsp;&nbsp;</span> { activeMarker.title }</li>
