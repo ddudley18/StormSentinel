@@ -1,7 +1,7 @@
-interface Option {
-    id: number;
-    label: string;
-}
+
+// =========================================
+// Marker Types
+// =========================================
 
 interface Marker {
     id: string | null,
@@ -21,6 +21,12 @@ interface DisasterMarkerProps {
     mapRef: google.maps.Map | google.maps.StreetViewPanorama | undefined;
 }
 
+
+
+// =========================================
+// Event Types
+// =========================================
+
 interface EventData {
     id: string;
     title: string;
@@ -39,6 +45,11 @@ interface EventData {
 }
 
 
+
+// =========================================
+// Map Types
+// =========================================
+
 interface DisasterMapProps {
     google: any;
     eventData: EventData[];
@@ -49,9 +60,26 @@ interface DisasterMapProps {
     zoom: number;
 }
 
+
+
+// =========================================
+// Info Box Types
+// =========================================
+
 interface LocationInfoBoxProps {
     info: {
         id: string;
         title: string;
     }
+}
+
+
+
+// =========================================
+// Filter Types
+// =========================================
+
+interface Option {
+    id: number;
+    label: string;
 }

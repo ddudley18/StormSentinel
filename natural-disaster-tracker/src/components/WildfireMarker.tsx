@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { Marker } from "google-maps-react";
+
 import { useSelector, useDispatch } from 'react-redux';
 import { setActiveMarker, setShowingInfoWindow, setInitMarkerClick } from "@/actions";
 
@@ -20,12 +21,12 @@ const idToDisasterTypeMap = new Map<number, string>([
 const WildfireMarker: React.FC<DisasterMarkerProps> = ({ key, markerData, mapRef, google, ...props }) => {
   const [passesFilter, setPassesFilter] = useState(true);
   const [isMouseOver, setIsMouseOver] = useState(false);
+
   const dispatch = useDispatch();
+  let filter = useSelector((state: RootState) => state.disasterFilters.wildfires);
+  
   let categoryMarker = idToMarkerMap.get(markerData['category']) ?? '/marker.png';
   let disasterType = idToDisasterTypeMap.get(markerData['category']) ?? 'Unknown';
-
-
-  let filter = useSelector((state: RootState) => state.disasterFilters.wildfires);
 
   useEffect(() => {
     setPassesFilter(filter);

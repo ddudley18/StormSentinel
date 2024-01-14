@@ -1,15 +1,17 @@
 import { useState, useEffect, useMemo } from 'react';
-import LocationInfoBox from './LocationInfoBox';
 import { Map as GoogleMap, GoogleApiWrapper, mapEventHandler } from "google-maps-react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setShowingInfoWindow } from "@/actions";
+
 import MapKey from './MapKey';
+import LocationInfoBox from './LocationInfoBox';
 import DisasterFilter from './DisasterFilter';
 import WildfireMarker from './WildfireMarker';
 import SevereStormMarker from './SevereStormMarker';
 import VolcanoMarker from './VolcanoMarker';
 import IcebergMarker from './IcebergMarker';
 import InstructionsBox from './InstructionsBox';
+
+import { setShowingInfoWindow } from "@/actions";
 
 
 const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string;
@@ -23,7 +25,9 @@ const idToMarkerMap = new Map<number, React.ComponentType<any>>([
 
 const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zoom }) => {
   const [map, setMap] = useState<google.maps.Map | google.maps.StreetViewPanorama | undefined>();
+
   const initMarkerClick = useSelector((state: RootState) => state.initMarkerClick);
+  const dispatch = useDispatch();
   
   const events = useMemo(() => {
     return eventData.map((event) => {
@@ -49,7 +53,6 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
               google={google}
               mapRef={map}
               markerData={markerData}
-              // onClick={() => setLocationInfo({ id: event.id, title: event.title })}
               mouseEnterHandler={() => {return null}}
               mouseLeaveHandler={() => {return null}} 
               
@@ -58,7 +61,6 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
     });
   }, [eventData]);
 
-  const dispatch = useDispatch();
   const onMapClicked = () => {
     dispatch(setShowingInfoWindow(false));
   };
@@ -105,5 +107,5 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
 };
 
 export default GoogleApiWrapper({
-  apiKey: googleMapsApiKey, // Replace with your actual API key
+  apiKey: googleMapsApiKey,
 })(DisasterMap);
