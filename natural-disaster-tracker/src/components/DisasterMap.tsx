@@ -26,7 +26,6 @@ const idToMarkerMap = new Map<number, React.ComponentType<any>>([
 const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zoom }) => {
   const [map, setMap] = useState<google.maps.Map | google.maps.StreetViewPanorama | undefined>();
 
-  const initMarkerClick = useSelector((state: RootState) => state.initMarkerClick);
   const dispatch = useDispatch();
   
   const events = useMemo(() => {
@@ -98,7 +97,7 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
       <GoogleMap {...mapObject}>
         {events}
       </GoogleMap>
-      ({!initMarkerClick && <InstructionsBox/>})
+      <InstructionsBox/>
       {<LocationInfoBox info={{id:'None', title:'None'}}/>}
       <MapKey/>
       <DisasterFilter/>

@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { Marker } from "google-maps-react";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveMarker, setShowingInfoWindow, setInitMarkerClick } from "@/actions";
+import { setActiveMarker, setShowingInfoWindow } from "@/actions";
 
 const idToMarkerMap = new Map<number, string>([
   [8, '/lightorangemarker.png'],
@@ -39,7 +39,6 @@ const IcebergMarker: React.FC<DisasterMarkerProps> = ({ key, markerData, mapRef,
     onClick: () => {
       dispatch(setActiveMarker({id: markerData.id, title: markerData.title, disasterType: disasterType, source: markerData['source'], coordinates: {lat: markerData.lat, lng: markerData.lng}, zoom: 2})),
       dispatch(setShowingInfoWindow(true));
-      dispatch(setInitMarkerClick(true));
     },
     onMouseover: () => {
       setIsMouseOver(true);
