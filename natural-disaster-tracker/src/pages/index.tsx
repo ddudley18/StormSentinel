@@ -20,7 +20,7 @@ export default function Home() {
       setLoading(true);
       const res = await axios.get('http://127.0.0.1:6060/disasters', {
         params: {
-          type: 'Severe Storms',
+          type: 'All',
         },
       });
 

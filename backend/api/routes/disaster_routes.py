@@ -16,7 +16,7 @@ class Disaster_Data(Resource):
         if disaster_type is None:
             return {'error': 'Please specify a disaster type.'}, 400
         
-        valid_disaster_types = ['Wildfires', 'Volcanoes', 'Severe Storms']
+        valid_disaster_types = ['Wildfires', 'Volcanoes', 'Severe Storms', 'Icebergs', 'All']
         if disaster_type not in valid_disaster_types:
             return {
                 'error': (
@@ -25,7 +25,18 @@ class Disaster_Data(Resource):
                 )
             }, 400
 
-        url = "https://eonet.gsfc.nasa.gov/api/v2.1/events"
+        if disaster_type == 'All':
+            url = "https://eonet.gsfc.nasa.gov/api/v2.1/events"
+        else:
+            disasterToIdMap = {
+                'Wildfires': 8,
+                'Severe Storms': 10,
+                'Volcanoes': 12,
+                'Icebergs': 15
+            }
+            category_id = disasterToIdMap[disaster_type]
+            url = f"https://eonet.gsfc.nasa.gov/api/v2.1/categories/{category_id}"
+            
         res = requests.request("GET", url)
 
         if res.status_code == 200:
