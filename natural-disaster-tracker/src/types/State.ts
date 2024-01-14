@@ -3,7 +3,6 @@ interface RootState {
     showingInfoWindow: boolean;
     mapParams: { center: { lat: number, lng: number }, zoom: number };
     disasterFilters: { wildfires: boolean, severeStorms: boolean, volcanoes: boolean, icebergs: boolean };
-    initMarkerClick: boolean;
 }
 
 interface AppState {
@@ -18,5 +17,4 @@ interface AppState {
     showingInfoWindow: boolean;
     mapParams: { center: { lat: number, lng: number }, zoom: number };
     disasterFilters: {wildfires: boolean, severeStorms: boolean, volcanoes: boolean, icebergs: boolean};
-    initMarkerClick: boolean;
 }

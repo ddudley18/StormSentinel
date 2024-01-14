@@ -16,8 +16,6 @@ export const rootReducer = (state: AppState = initialState, action: { type: stri
       return { ...state, mapParams: action.payload };
     case 'SET_DISASTER_FILTERS':
       return { ...state, disasterFilters: action.payload };
-    case 'SET_INIT_MARKER_CLICK':
-      return { ...state, initMarkerClick: action.payload };
     default:
       return state;
   }

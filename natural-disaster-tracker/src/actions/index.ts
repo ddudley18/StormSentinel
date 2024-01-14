@@ -17,8 +17,3 @@ export const setDisasterFilters = (filters : {wildfires: boolean, severeStorms: 
     type: 'SET_DISASTER_FILTERS',
     payload: filters,
 });
-
-export const setInitMarkerClick = (click: boolean) => ({
-    type: 'SET_INIT_MARKER_CLICK',
-    payload: click,
-});
