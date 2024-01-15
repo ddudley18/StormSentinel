@@ -40,10 +40,10 @@ const DisasterFilter = () => {
 
 
     return (
-        <Accordion className="absolute top-16 left-16 w-64 min-h-48 mt-12 bg-opacity-70 rounded-lg text-lg text-white hover:bg-black ">
+        <Accordion className="absolute top-16 left-16 w-60 p-0 mt-12 bg-opacity-70 text-lg text-white hover:bg-black ">
             <AccordionPanel className="hover:bg-black  bg-opacity-70">
-                <AccordionTitle className="text-xl text-white hover:bg-black bg-black bg-opacity-70">Filter Disaster Types</AccordionTitle>
-                <AccordionContent className="hover:bg-black bg-black bg-opacity-70">
+                <AccordionTitle className="text-xl h-12 text-white hover:bg-black bg-black bg-opacity-70 rounded-sm">Filter Disaster Types</AccordionTitle>
+                <AccordionContent className="hover:bg-black bg-black bg-opacity-70 p-4 py-3">
                 {options.map((option) => (
                     <div key={option.id} className="flex items-center">
                         <input
@@ -64,3 +64,25 @@ const DisasterFilter = () => {
 }
 
 export default DisasterFilter;
+
+
+
+
+
+
+        {/* <div className="absolute top-16 left-16 w-64 min-h-48 p-5 mt-12 bg-black bg-opacity-70 rounded-lg text-lg text-white border-2 border-white">
+            <h2 className="text-xl">Select Disaster Type:</h2>
+            {options.map((option) => (
+            <div key={option.id} className="flex items-center">
+                <input
+                type="checkbox"
+                id={`option-${option.id}`}
+                checked={selectedOptions.includes(option.id)}
+                onChange={() => handleCheckboxChange(option.id)}
+                className="mr-2"
+                />
+                <label htmlFor={`option-${option.id}`}>{option.label}</label>
+            </div>
+
+            ))}
+      </div> */}

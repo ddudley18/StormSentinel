@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Map as GoogleMap, GoogleApiWrapper, mapEventHandler } from "google-maps-react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import AIAssistantBox from './AIAssistantBox';
 
 import MapKey from './MapKey';
 import LocationInfoBox from './LocationInfoBox';
@@ -100,6 +101,7 @@ const DisasterMap: React.FC<DisasterMapProps> = ({ google, eventData, center, zo
       <InstructionsBox/>
       {<LocationInfoBox info={{id:'None', title:'None'}}/>}
       <MapKey/>
+      <AIAssistantBox/>
       <DisasterFilter/>
     </div>
     );

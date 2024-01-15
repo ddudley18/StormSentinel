@@ -3,7 +3,6 @@ const initialState: AppState = {
   showingInfoWindow: false,
   mapParams: { center: { lat: 18.22, lng: -66.59 }, zoom: 4 },
   disasterFilters: {wildfires: true, severeStorms: true, volcanoes: true, icebergs: true},
-  initMarkerClick: false
 };
   
 export const rootReducer = (state: AppState = initialState, action: { type: string; payload: any }) => {
