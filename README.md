@@ -2,13 +2,19 @@
 
 
 ## TLDR; Here is the demo! 🚀
-Coming soon...
+[![Storm Sentinel Demo](https://github.com/ddudley18/StormSentinel/assets/40705498/0a233003-13bf-4dfb-aa31-363c8ce70200)](https://youtu.be/Z-0Lqlw9o5E)
 ## 📖 A little intro...
 Fresh off of watching [Only the Brave](https://www.youtube.com/watch?v=EE_GY6zccqc), a movie illustrating an incredible true story about firefighters fighting the wildfires out west, I wanted to build something wildfire-themed. 
 
 I was looking for a way to gain access to live information about currently occuring wildfires, and stumbled across NASA's satellite [data](https://api.nasa.gov/) 🛰️. As part of their EONET (Earth Observatory Natural Event Tracker) api, NASA provides data not only on wildfires, but on all natural disasters currently occuring.
 
-So I thought, why not? Let's use this to build a live natural disaster tracker for any type of disaster currently occuring. And voila - Storm Sentinel was born.
+So I thought, why not? Let's use this to build a live natural disaster tracker for any type of disaster currently occuring. And _voila_ - Storm Sentinel was born.
+
+## The Map
+## AI Assistant
+## Search & Source Tools
+## Filtering
+
 ## Awesome Tools That I Used
 - [LangChain](https://github.com/langchain-ai/langchain)
 - [Tavily](https://github.com/assafelovic/gpt-researcher)
