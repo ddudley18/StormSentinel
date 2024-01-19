@@ -29,7 +29,7 @@ But how to implement this? A custom trained model using AI libraries such as Ten
 The result? A simple, quick to launch AI assistant that is surprisingly accurate. 
 
 ## Info Display Panel & Assorted Tools
-<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/7e565d7c-f154-4796-8a53-71cc7cea4bb3"  alt="Delete Feature"  title="Swipe to delete" img align="left" height="250"/>
+<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/7e565d7c-f154-4796-8a53-71cc7cea4bb3"  alt="Delete Feature"  title="Swipe to delete" img align="left" height="500"/>
 
 When selected, each disaster generates an information panel with basic information such as name, type, and id (as given by NASA). 
 
@@ -40,17 +40,17 @@ Three other tools are also provided here:
 &nbsp;3. **Search The News** - Searches Google News using the disaster name for relevant information
 
 While the AI assitant provides more detail, the **Source** and **Search the News** tools are there to provide the user with a faster way to quickly conduct their own research.  
+<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/c44b77fd-0b95-4c6d-8fae-2529bbc7b4ff"  alt="Delete Feature"  title="Swipe to delete" height="230"/>  
 
-## Filtering
-<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/b5bf0e66-b98e-4db6-aa6e-aa5c08086aea"  alt="Delete Feature"  title="Swipe to delete" img align="right" height="250"/>
+## Filtering  
+<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/b5bf0e66-b98e-4db6-aa6e-aa5c08086aea"  alt="Delete Feature"  title="Swipe to delete" img align="right" height="230"/>  
 
 Naturally at some point you think - how do I sort through all these markers that are swamping the map? While the color coding is useful at a smaller scale, it's not helpful for finding specific disasters. 
 
 For instance, if you're especially interested in active volcanoes, wildfires tend to dominate the map and it's easy for a stray volcano to get lost among them. Especially at a global view, a clumping of wildfires can easily cover another type of disaster hidden underneath.
 
 A simple collapsible filter is a logical way to fix this problem. I implemented a filter based on unique category ids for each type of disaster.
-
-
+&nbsp;  
 
 ## Awesome Tools That I Used
 - [LangChain](https://github.com/langchain-ai/langchain)🦜🔗
