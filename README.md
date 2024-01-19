@@ -40,7 +40,7 @@ Three other tools are also provided here:
 &nbsp;3. **Search The News** - Searches Google News using the disaster name for relevant information
 
 While the AI assitant provides more detail, the **Source** and **Search the News** tools are there to provide the user with a faster way to quickly conduct their own research.  
-<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/c44b77fd-0b95-4c6d-8fae-2529bbc7b4ff"  alt="Delete Feature"  title="Swipe to delete" height="210"/>  
+<img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/c44b77fd-0b95-4c6d-8fae-2529bbc7b4ff"  alt="Delete Feature"  title="Swipe to delete" height="180"/>  
 
 ## Filtering  
 <img  src="https://github.com/ddudley18/StormSentinel/assets/40705498/b5bf0e66-b98e-4db6-aa6e-aa5c08086aea"  alt="Delete Feature"  title="Swipe to delete" img align="right" height="230"/>  
